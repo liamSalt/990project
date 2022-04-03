@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[all]{xy}
+\usepackage{multicol}
+
+\usepackage{amsmath,amsthm,amssymb,color,latexsym}
+\usepackage{geometry}        
+\geometry{letterpaper}    
+\usepackage{graphicx}
+\usepackage[shortlabels]{enumitem}
+\usepackage[dvipsnames]{xcolor}
+
+\newtheorem*{thm}{Theorem}
+\newtheorem*{defn}{Definition}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{lem}{Lemma}
+\newtheorem*{rmk}{Remark}
+
+
+
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\ZZ}{\mathbb{Z}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\ol}{\overline}
+\newcommand{\AutG}{\text{Aut($G$)}}
+\newcommand{\vp}{\vec{v}_p}
+\newcommand{\f}{f:S\subset\CC\to\CC}
+\newcommand{\q}[1]{\textbf{#1)}}
+\newcommand{\ex}{Example }
+\newcommand{\exs}{Examples }
+\newcommand{\Hom}[2]{\text{Hom}(#1,#2)}
+\definecolor{light-gray}{gray}{0.75}
+\newcommand{\bra}[1]{\langle #1 \vert}
+\newcommand{\ket}[1]{\vert #1 \rangle}
+\newcommand{\braket}[2]{\langle #1\vert #2 \rangle}
+
+\title{Introduction to Quantum Proof Systems and Applications}
+\author{Liam Salt - APMA 990}
+\begin{document}
+	\maketitle
+	\tableofcontents
+	\begin{abstract}
+		In this paper, we introduce quantum proof systems in their generality, and showcase their utility by using them to solve for certain properties of finite groups. A quantum proof is a state which, along with some quantum computations, can be used to solve problems in Quantum MA (QMA),  a class of decision problems analogous to NP. Using the notion of a black box group, a type of oracle, we exemplify the power of quantum proof systems by considering such problems as group non-membership. We show that this problem is solvable (up to some error) in polynomial time, which is impossible classically. Efficient solving and verification of group non-membership also allows us to approach other group theoretical problems such as: finding the maximal normal subgroup, and whether an integer N divides the order of a group.
+	\end{abstract}
+	\section{Computer Science Background}
+	
+	\subsection{Interactive Proof Systems}
+	
+	Before we can define a quantum proof system, we first must introduce some classical computing formalism and terminology. An \textit{interactive proof system} is a Turing machine that encapsulates the mathematical idea of a ``proof". Specifically, an interactive proof system models two actors, a \textit{prover} who attempts to answer a question and produces a proof certificate, and a verifier who checks the validity of the certificate. The convention is to assume that the prover has unlimited computing power but is dishonest, while the verifier is limited in computing power but is honest. In any interactive proof system, the goal is for the verifier to become convinced with certainty of the prover's ability to produce a valid certificate. Additionally, an interactive proof system is assumed to satisfy both \textit{completeness} and \textit{soundess}, defined below:
+	\begin{defn}
+		A Turing machine composed of a prover and verifier pair is said to be \underline{complete} or to satisfy completeness if for any true statement, the prover can always convince the verifier of its validity.
+	\end{defn}
+	\begin{defn} A Turing machine composed of a prover and verifier pair is said to be \underline{sound} if for any false statement, the prover can never convince the verifier of its validity.
+	\end{defn}
+
+	\begin{rmk} Occasionally, these conditions are only defined up to some probability.\end{rmk}
+	
+	The canonical and most familiar example of an interactive proof system is the complexity class \textbf{NP}. We recall that one definition of \textbf{NP} is as the set of decision problems whose positive answers can be verified in polynomial time by a deterministic Turing machine. Accordingly, we can see that \textbf{NP} is an instance of an interactive proof system by taking its verifier to be such a deterministic polynomial-time Turing machine, and its prover to be any machine that can, given an input, produce a polynomial-sized certificate. Therefore, if a valid certificate exists for a given problem, the prover can always produce a valid certificate, which the verifier can check in polynomial-time, and if such a certificate does not exist, the 
+	
+	\subsection{Arthur-Merlin Protocol}
+	d
+    \section{Quantum Complexity Classes}
+    d
+    \subsection{Relationship Between QMA and PP}d
+    
+    \section{Group Theoretic Applications}
+    d
+    \subsection{Group Non-Membership}d
+    \subsection{Other Applications/Open Problems}j
+	
+	
+	
+		
+\end{document}
