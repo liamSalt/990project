@@ -44,23 +44,31 @@
 	\maketitle
 	\tableofcontents
 	\begin{abstract}
-		In this paper, we introduce quantum proof systems in their generality, and showcase their utility by using them to solve for certain properties of finite groups. A quantum proof is a state which, along with some quantum computations, can be used to solve problems in Quantum MA (QMA),  a class of decision problems analogous to NP. Using the notion of a black box group, a type of oracle, we exemplify the power of quantum proof systems by considering such problems as group non-membership. We show that this problem is solvable (up to some error) in polynomial time, which is impossible classically. Efficient solving and verification of group non-membership also allows us to approach other group theoretical problems such as: finding the maximal normal subgroup, and whether an integer N divides the order of a group.
+		In this paper, we introduce quantum interactive proof systems, demonstrate their advantages over classical systems, and showcase their utility by using them to prove certain properties of finite groups. A quantum proof is a state which, along with some quantum computations, can be used to solve problems in Quantum MA (QMA),  a class of decision problems analogous to NP. Using the notion of a black box group, a type of oracle, we exemplify the power of quantum proof systems by considering such problems as group non-membership. We show that this problem is solvable (up to some error) in polynomial time, which is impossible classically. Efficient solving and verification of group non-membership also allows us to approach other group theoretical problems such as: finding the maximal normal subgroup, and whether an integer N divides the order of a group.
 	\end{abstract}
-	\section{Computer Science Background}
+	\section{Introduction}
 	
-	\subsection{Interactive Proof Systems}
+	\subsection{Computer Science Background}
 	
-	Before we can define a quantum proof system, we first must introduce some classical computing formalism and terminology. An \textit{interactive proof system} is a Turing machine that encapsulates the mathematical idea of a ``proof". Specifically, an interactive proof system models two actors, a \textit{prover} who attempts to answer a question and produces a proof certificate, and a verifier who checks the validity of the certificate. The convention is to assume that the prover has unlimited computing power but is dishonest, while the verifier is limited in computing power but is honest. In any interactive proof system, the goal is for the verifier to become convinced with certainty of the prover's ability to produce a valid certificate. Additionally, an interactive proof system is assumed to satisfy both \textit{completeness} and \textit{soundess}, defined below:
+	Before we can begin to define a quantum proof system, we first must introduce some classical computing formalism and terminology. In classical computing, an \textit{interactive proof system} is a Turing machine that encapsulates the mathematical idea of a proof. It models a proof as a sequence of communications between two actors: a potentially dishonest \textit{prover}, and a skeptical, honest verifier. Through various \textit{rounds} of communication, the prover attempts to convince the verifier to accept their proof. The default convention is to assume the verifier is constrained to be a deterministic polynomial-time TM, whereas we make no constraints to the prover's computational power. Additionally, an interactive proof system is assumed to satisfy both \textit{completeness} and \textit{soundess}, defined below:
 	\begin{defn}
-		A Turing machine composed of a prover and verifier pair is said to be \underline{complete} or to satisfy completeness if for any true statement, the prover can always convince the verifier of its validity.
+		An interactive proof system is said to be \underline{complete} or to satisfy completeness if for any true statement, the prover can always convince the verifier of its validity.
 	\end{defn}
-	\begin{defn} A Turing machine composed of a prover and verifier pair is said to be \underline{sound} if for any false statement, the prover can never convince the verifier of its validity.
+	\begin{defn} An interactive proof system is said to be \underline{sound} if for any false statement, the prover can only with negligible probability convince the verifier of its validity.
 	\end{defn}
 
-	\begin{rmk} Occasionally, these conditions are only defined up to some probability.\end{rmk}
+	\begin{rmk} Often, many of these conditions are loosened in various ways, e.g. the prover only needing to convince the verifier up to some probability.\end{rmk}
 	
-	The canonical and most familiar example of an interactive proof system is the complexity class \textbf{NP}. We recall that one definition of \textbf{NP} is as the set of decision problems whose positive answers can be verified in polynomial time by a deterministic Turing machine. Accordingly, we can see that \textbf{NP} is an instance of an interactive proof system by taking its verifier to be such a deterministic polynomial-time Turing machine, and its prover to be any machine that can, given an input, produce a polynomial-sized certificate. Therefore, if a valid certificate exists for a given problem, the prover can always produce a valid certificate, which the verifier can check in polynomial-time, and if such a certificate does not exist, the 
+	Now we can more formally define an interactive proof system.\\
 	
+	We say that a formal language $L$ has a $k$-round interactive proof system with error probability $\varepsilon$ with prover verifier pair $(P,V)$ if:
+	\begin{enumerate}
+		\item $(P,V)$ either accepts or rejects any input after $k$ rounds
+		\item $\forall x\in L, (P,V)$ accepts $x$ with probability 1
+		\item $\forall x\notin L, (P,V)$ accepts $x$ with probability $\varepsilon$ 
+	\end{enumerate}
+	
+	Given this definition, a familiar, degenerate example is to show that any language in \textbf{NP} has a $1-$round interactive proof system with error probability $0$. We recall that one definition of \textbf{NP} is as the set of decision problems whose positive answers can be verified in polynomial time by a deterministic Turing machine. Accordingly, if a problem is in \textbf{NP}, then by definition on input our prover can produce a polynomial-sized certificate, which can be verified in polynomial-time exactly when the input is in the language.     
 	\subsection{Arthur-Merlin Protocol}
 	d
     \section{Quantum Complexity Classes}
