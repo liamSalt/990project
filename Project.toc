@@ -2,7 +2,7 @@
 \contentsline {subsection}{\numberline {1.1}Computer Science Background}{1}{subsection.1.1}%
 \contentsline {subsection}{\numberline {1.2}Arthur-Merlin Protocol}{3}{subsection.1.2}%
 \contentsline {section}{\numberline {2}Quantum Interactive Proof Systems}{3}{section.2}%
-\contentsline {subsection}{\numberline {2.1}Relationship Between QMA and PP}{3}{subsection.2.1}%
-\contentsline {section}{\numberline {3}Group Theoretic Applications}{3}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Group Non-Membership}{3}{subsection.3.1}%
-\contentsline {subsection}{\numberline {3.2}Other Applications/Open Problems}{3}{subsection.3.2}%
+\contentsline {subsection}{\numberline {2.1}Relationship Between QMA and PP}{4}{subsection.2.1}%
+\contentsline {section}{\numberline {3}Group Theoretic Applications}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Group Non-Membership}{4}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Other Applications/Open Problems}{4}{subsection.3.2}%

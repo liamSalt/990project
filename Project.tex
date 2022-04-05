@@ -39,15 +39,14 @@
 \newcommand{\ket}[1]{\vert #1 \rangle}
 \newcommand{\braket}[2]{\langle #1\vert #2 \rangle}
 
-\title{Introduction to Quantum Proof Systems and Applications}
+\title{Introduction to Quantum Interactive Proof Systems and Applications}
 \author{Liam Salt - APMA 990}
 \begin{document}
 	\maketitle
 	
 	\begin{abstract}
-		In this paper, we introduce quantum interactive proof systems, demonstrate their advantages over classical systems, and showcase their utility by using them to prove certain properties of finite groups. A quantum proof is a state which, along with some quantum computations, can be used to solve problems in Quantum MA (QMA),  a class of decision problems analogous to NP. Using the notion of a black box group, a type of oracle, we exemplify the power of quantum proof systems by considering such problems as group non-membership. We show that this problem is solvable (up to some error) in polynomial time, which is impossible classically. Efficient solving and verification of group non-membership also allows us to approach other group theoretical problems such as: finding the maximal normal subgroup, and whether an integer N divides the order of a group.
+		In this paper, we introduce quantum interactive proof systems, demonstrate their advantages over classical systems, and showcase their utility by using them to prove certain properties of finite groups. We show that any language in PSPACE has a $2$-round quantum interactive proof system, which is strictly more powerful than the classical case. Finally, using the notion of a black box group oracle, we exemplify the power of quantum interactive proof systems by considering the group non-membership problem. We show that this problem is solvable (up to some bounded error) in polynomial time, which is impossible classically. Construction of efficient proofs for group non-membership also allows us to approach other group theoretical problems such as: finding the maximal normal subgroup, and whether an integer N divides the order of a group.
 	\end{abstract}
-	\tableofcontents
 	\section{Introduction}
 	
 	\subsection{Computer Science Background}
@@ -70,11 +69,11 @@
 		\item $\forall x\notin L, (P,V)$ accepts $x$ with probability $\varepsilon$ 
 	\end{enumerate}
 	
-	Given this definition, a familiar, degenerate example is to show that any language in \textbf{NP} has a $1-$round interactive proof system with error probability $0$. We recall that one definition of \textbf{NP} is as the set of decision problems whose positive answers can be verified in polynomial time by a deterministic Turing machine. Accordingly, if a problem is in \textbf{NP}, then by definition on input our prover can produce a polynomial-sized certificate, which can be verified in polynomial-time exactly when the input is in the language. In fact, the class of languages which have a deterministic interactive proof system, termed \textbf{dIP}, is exactly equal to \textbf{NP}. \\
+	Given this definition, a familiar, degenerate example is to show that any language in \textbf{NP} has a $1-$round interactive proof system with error probability $0$. We recall that one definition of \textbf{NP} is as the set of decision problems whose positive answers can be verified in polynomial time by a deterministic Turing machine. Accordingly, if a problem is in \textbf{NP}, then by definition on input our prover can produce a polynomial-sized certificate, which can be verified in polynomial-time exactly when the input is in the language. In fact, the class of languages which have a deterministic interactive proof system, termed \textbf{dIP}, is exactly equal to \textbf{NP}. We can think of this as meaning that we can capture the full power of deterministic interactive proof systems with the class \textbf{NP}.\\
 	
 	We can generalize the above definition by allowing the verifier to also have access to a random number generator, with which it may generate and make use of random bits in each round. The addition of the verifier's access to randomness brings us to the full definition of an interactive proof system. The complexity class of all languages that have interactive proof systems is termed \textbf{IP}, and it can be shown [potentially in this paper] that \textbf{IP}$=$\textbf{PSPACE}. In other words, problems which can be accepted by an interactive proof system are exactly those problems which require only polynomial-sized space (memory) to answer. 
 	\subsection{Arthur-Merlin Protocol}
-	One particular subclass of \textbf{IP} which will become important in the quantum case is \textbf{MA}, which stands for Merlin-Arthur (of King Arthur fame), and is comprised of languages which have a particular type of interactive proof system known as an Arthur-Merlin protocol. This class was originally described in \hyperref[bab]{[Bab]} and [Gol].
+	Related to \textbf{IP}, is another class which will become important in the quantum case is \textbf{MA}, which stands for Merlin-Arthur (of King Arthur fame), and is comprised of languages which have a particular type of interactive proof system known as an Arthur-Merlin protocol. This class was originally described in \hyperref[bab]{[Bab]} and [Gol].
 	
 	\begin{defn}
 		A language $L$ is said to have an Arthur-Merlin protocol with prover-verifier pair (Merlin, Arthur) if:
@@ -89,9 +88,40 @@
 	\end{defn}
 	Equivalently, we say $L\in \textbf{MA}$. For clarity, in the above definition $z$ is the polynomial-sized proof certificate provided by Merlin, and whether Arthur accepts Merlin's proof depends on both the string sent by Merlin and the random string produced by Arthur.\\
 	
-	The probability conditions given above are quite flexible. Given a language meeting the definition above, it can be shown that we can induce a new Arthur-Merlin pair for that language that achieves perfect completeness, and soundness with error probability at most $\frac{1}{2}$.
+	The probability conditions given above are quite flexible. Given a language meeting the definition above, it can be shown that we can induce a new Arthur-Merlin pair for that language that achieves perfect completeness, and soundness with error probability at most $\frac{1}{2}$.\\
+	
+	It will be important to see how \textbf{MA} relates to other complexity classes:
+	\begin{prop}\textbf{MA} contains both \textbf{NP}$=$\textbf{dIP} and \textbf{BPP}. \end{prop}
+	\begin{proof}The second containment is easy to see given the definition of \textbf{BPP}, as Arthur has access to random bits and a polynomial-time Turing machine (with acceptance prob $\frac{2}{3}$ as required in \textbf{BPP}); therefore, Arthur doesn't need to send anything to Merlin, as he is capable of solving any problem in \textbf{BPP} himself.\\Similarly for \textbf{NP}, Merlin can solve the problem then send Arthur the proof certificate which he can verify deterministically, i.e. without needing his random bits. \end{proof}
+	
     \section{Quantum Interactive Proof Systems}
-    dd
+    Now that we have seen the definition of interactive proof systems in the classical case, we can discuss what happens if we allow the Turing machines access to quantum computations. It has been observed that allowing access to quantum computation lends itself to significant speed-up in many classical problems, including: from integer factorization, computing discrete logarithms, efficient unstructured search, etc., so it makes sense to ask whether any of the above definitions in section 1 are significantly affected by access to quantum circuits.
+   
+    \begin{rmk}The Turing machine model is sufficient, but for the remainder of this paper we will use the equivalent circuit model of quantum computation. \end{rmk}
+    
+    Specifically, a quantum interactive proof system is one where the verifier has access to quantum circuits which can solve problems in \textbf{BQP}, while the prover is still unrestricted (within the boundaries of quantum mechanics). The convention is for the messages exchanged between prover and verifier to be encoded as quantum states in the usual $n-$qubit $z-$basis. Some relevant terminology is that we call the class of all languages that have quantum interactive proof systems Quantum \textbf{IP} or \textbf{QIP}.
+    \begin{defn}
+    	A language $L$ is said to have a quantum interactive proof system with error probability $\varepsilon$, or to be in \textbf{QIP}, if:
+    	\begin{enumerate}
+    		\item The verifier accepts or rejects any input $x$ using a quantum circuit solving problems in \textbf{BQP}.
+    		\item If $x\in L$, then given the polynomial-many actions of the prover, the verifier accepts $x$ with probability $1$.
+    		\item If $x\notin L$, then regardless of the actions of the prover, the verifier accepts $x$ with probability $\varepsilon$.
+    	\end{enumerate}
+    \end{defn}
+
+	We can see that this definition for \textbf{QIP} looks quite similar to the classical definition of \textbf{IP}, which we discuss more in the next section. In its current state \textbf{QIP} is actually only as powerful as \textbf{IP}, and in fact, \textbf{QIP}=\textbf{IP}=\textbf{PSPACE}. 
+	\subsection{Relationship between QIP and PSPACE}
+	Despite the claim at the end of the previous section, we can say a bit more about the relationship between \textbf{QIP} and \textbf{PSPACE}. Namely, we can put a very nice bound on the number of queries required in a quantum interactive proof system to determine any language in \textbf{PSPACE}. We introduce the first theorem, which is the principal subject of \hyperref[wat99]{[Wat99]}:
+	\begin{thm}
+		Every language in \textbf{PSPACE} has a $2-$round quantum interactive proof system with exponentially small error probability. 
+	\end{thm}
+
+	In other words, we can prove that \textbf{PSPACE} $\subseteq$ \textbf{QIP[2]}, the class of languages with $2-$round quantum interactive proof systems, a much tighter bound than what was claimed in the previous section. Importantly, it can also be shown in the constant round case, \textbf{IP[k]} is strictly outperformed by \textbf{QIP[2]}, demonstrating the power of moving to quantum computations.\\
+	
+	To prove the above theorem, we need to show that any language in \textbf{PSPACE} has such a proof system, but it will be sufficient to prove the theorem for a language which is \textbf{PSPACE}-complete. In particular, we show the theorem for the language of true quantified boolean formulas, that is the language of true expressions $Q_1x_1\cdots Q_nx_nf(x_1,\dots,x_n)$, where $Q_i$ is a universal or existential quantifier $(\forall,\exists)$, $x_i$ are boolean valued variables, and $f:B_n\to B$ consisting of operations $\wedge,\vee,\neg$,etc. 
+     \subsection{QMA}
+    Having now introduced quantum interactive proof systems and the classical class \textbf{MA}, we can discuss its natural extension \textbf{QMA} 
+    
     \subsection{Relationship Between QMA and PP}d
     
     \section{Group Theoretic Applications}
@@ -104,9 +134,9 @@
 	\begin{tabular}{ l l }
 		\label{bab}[Bab] & L. Babai, Trading Group Theory for Randomness, Proceedings of the Seventeenth\\& Annual ACM
 		Symposium on the Theory of Computing, 1985, 421-429.\\
-		\label{wat1}[Wat1] & J. Watrous, PSPACE has 2-round quantum interactive proof systems\\& Annual ACM
-		Symposium on the Theory of Computing, 1985, 421-429.\\
-		
+		\label{gol89}[Gol89] & S. Goldwasser, M. Sipser. Private coins versus public coins in interactive proof \\& systems, Randomness and Computation, volume 5 of Advances in Computing\\& Research, JAI Press, 1989, 73-90.\\
+		\label{wat99}[Wat99] & J. Watrous, PSPACE has 2-round quantum interactive proof systems, 1999. \\&https://doi.org/10.48550/arXiv.cs/9901015\\
+		\label{wat00}[Wat00] & J. Watrous, Succinct quantum proofs for properties of finite groups, 2000. \\&https://doi.org/10.48550/arXiv.cs/0009002\\
 	\end{tabular}
 	
 		
